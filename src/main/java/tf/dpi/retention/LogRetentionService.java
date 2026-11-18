@@ -2,6 +2,8 @@ package tf.dpi.retention;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -29,8 +31,8 @@ public class LogRetentionService {
 
     public LogRetentionService(
             JdbcTemplate jdbcTemplate,
-            @Value("${mosip.retention.retention.days:90}") int retentionDays,
-            @Value("${mosip.retention.retention.hours:0}") int retentionHours,
+            @Value("${mosip.retention.retention.days:0}") int retentionDays,
+            @Value("${mosip.retention.retention.hours:10}") int retentionHours,
             @Value("${mosip.retention.batch-size:500}") int batchSize,
             @Value("${mosip.retention.max-batches-per-run:10}") int maxBatchesPerRun,
             @Value("${mosip.retention.delete-delay-ms:0}") long deleteDelayMillis,
@@ -55,7 +57,8 @@ public class LogRetentionService {
 
     public void applyRetentionPolicy() {
         Instant cutoff = Instant.now().minus(retention);
-        long eligibleRecords = countEligibleRecords(cutoff);
+        OffsetDateTime cutoffParameter = OffsetDateTime.ofInstant(cutoff, ZoneOffset.UTC);
+        long eligibleRecords = countEligibleRecords(cutoffParameter);
         long maxRecordsThisRun = (long) batchSize * maxBatchesPerRun;
 
         if (dryRun) {
@@ -70,7 +73,7 @@ public class LogRetentionService {
         int deletedRecords = 0;
         int batches = 0;
         while (batches < maxBatchesPerRun) {
-            int deletedInBatch = deleteBatch(cutoff);
+            int deletedInBatch = deleteBatch(cutoffParameter);
             if (deletedInBatch == 0) {
                 break;
             }
@@ -90,7 +93,7 @@ public class LogRetentionService {
                 deletedRecords, eligibleRecords, batches, cutoff);
     }
 
-    private long countEligibleRecords(Instant cutoff) {
+    private long countEligibleRecords(OffsetDateTime cutoff) {
         String sql = "SELECT COUNT(*) FROM log_chunks WHERE " + eligibleWhereClause();
         Long count = jdbcTemplate.queryForObject(sql, Long.class, cutoff);
         if (count == null) {
@@ -99,7 +102,7 @@ public class LogRetentionService {
         return count;
     }
 
-    private int deleteBatch(Instant cutoff) {
+    private int deleteBatch(OffsetDateTime cutoff) {
         String sql = """
                 WITH candidates AS (
                     SELECT id

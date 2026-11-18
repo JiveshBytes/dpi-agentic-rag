@@ -2,6 +2,11 @@ spring:
   application:
     name: mosip-dpi-agentic-rag
 
+  task:
+    scheduling:
+      pool:
+        size: 4
+
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5433/postgres}
     username: ${DB_USERNAME:postgres}
@@ -42,12 +47,12 @@ mosip:
   stage: ${MOSIP_STAGE:local}
   elasticsearch:
     hosts: http://localhost:9200
-    kibana-url: ${KIBANA_URL:https://kibana.nsis.nira.go.ug}
+    kibana-url: ${KIBANA_URL:https://kibana.niraqa1.idencode.link}
     kibana-space: ${KIBANA_SPACE:}
     api-key: ${KIBANA_API_KEY:}
-    username: ${KIBANA_USER:admin}
-    password: ${KIBANA_PASSWORD:YzFwXw3410654S0}
-    index: ${KIBANA_INDEX:prod.master.machine_master}
+    username: ${KIBANA_USER:elastic}
+    password: ${KIBANA_PASSWORD:elastic@123}
+    index: ${KIBANA_INDEX:niraqa1.ida.auth_transaction}
     time-field: ${KIBANA_TIME_FIELD:request_dtimes}
     query: ${KIBANA_QUERY:}
     page-size: ${KIBANA_PAGE_SIZE:500}
@@ -72,11 +77,7 @@ mosip:
 
   retention:
     enabled: true
-    cron: "0 0 2 * * ?"
     timezone: UTC
-    retention:
-      days: 90
-      hours: 0
     batch-size: 500
     max-batches-per-run: 10
     delete-delay-ms: 100

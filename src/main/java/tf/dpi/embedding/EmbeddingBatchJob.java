@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+
 import tf.dpi.storage.LogChunkRepository;
 
 /**
@@ -35,7 +37,9 @@ public class EmbeddingBatchJob {
         this.batchSize = batchSize;
     }
 
-    @Scheduled(fixedDelayString = "${mosip.ingestion.checkpoint-interval-seconds:300000}")
+    @Scheduled(
+            fixedDelayString = "${mosip.ingestion.checkpoint-interval-seconds:300}",
+            timeUnit = TimeUnit.SECONDS)
     public void run() {
         log.info("Starting embedding batch job for unembedded chunks");
         int total = 0;

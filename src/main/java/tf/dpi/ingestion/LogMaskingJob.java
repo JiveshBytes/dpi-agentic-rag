@@ -13,6 +13,7 @@ import tf.dpi.masking.LogMaskingService;
 import java.io.*;
 import java.nio.file.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @ConditionalOnProperty(prefix = "mosip.ingestion.file-masking-job", name = "enabled", havingValue = "true")
@@ -40,7 +41,9 @@ public class LogMaskingJob {
      * Reads log.txt, masks every entry, saves results to file, and logs a sample.
      * Runs on a fixed delay so you can re-run masking whenever log.txt changes.
      */
-    @Scheduled(fixedDelayString = "${mosip.ingestion.checkpoint-interval-seconds:60000}")
+    @Scheduled(
+            fixedDelayString = "${mosip.ingestion.checkpoint-interval-seconds:60}",
+            timeUnit = TimeUnit.SECONDS)
     public void runMasking() {
         log.info("Starting log masking job");
 

@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Scheduled job that triggers log ingestion from Elasticsearch into the RAG pipeline.
  */
@@ -29,7 +31,9 @@ public class LogIngestionJob {
     /**
      * Runs ingestion on a fixed schedule defined by {@code mosip.ingestion.checkpoint-interval-seconds}.
      */
-    @Scheduled(fixedDelayString = "${mosip.ingestion.checkpoint-interval-seconds:60000}")
+    @Scheduled(
+            fixedDelayString = "${mosip.ingestion.checkpoint-interval-seconds:60}",
+            timeUnit = TimeUnit.SECONDS)
     public void ingest() {
         log.info("Starting scheduled log ingestion job");
         try {

@@ -1,5 +1,6 @@
 package tf.dpi.retention;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -10,6 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -63,17 +65,24 @@ class LogRetentionServiceTest {
         JdbcTemplate jdbcTemplate = org.mockito.Mockito.mock(JdbcTemplate.class);
         when(jdbcTemplate.queryForObject(anyString(), eq(Long.class), any(Object[].class)))
                 .thenReturn(0L);
-        LogRetentionService service = service(jdbcTemplate, 0, 1, 10, 1, 0, true, false);
+        when(jdbcTemplate.update(anyString(), any(Object[].class))).thenReturn(0);
+        LogRetentionService service = service(jdbcTemplate, 0, 1, 10, 1, 0, false, false);
 
         Instant before = Instant.now();
         service.applyRetentionPolicy();
         Instant after = Instant.now();
 
-        org.mockito.ArgumentCaptor<Object[]> arguments = org.mockito.ArgumentCaptor.forClass(Object[].class);
-        verify(jdbcTemplate).queryForObject(anyString(), eq(Long.class), arguments.capture());
-        Instant cutoff = (Instant) arguments.getValue()[0];
-        assertTrue(cutoff.isAfter(before.minusSeconds(3_601)));
-        assertTrue(cutoff.isBefore(after.minusSeconds(3_599)));
+        org.mockito.ArgumentCaptor<Object[]> countArguments =
+                org.mockito.ArgumentCaptor.forClass(Object[].class);
+        verify(jdbcTemplate).queryForObject(anyString(), eq(Long.class), countArguments.capture());
+        OffsetDateTime cutoff = (OffsetDateTime) countArguments.getValue()[0];
+        assertTrue(cutoff.toInstant().isAfter(before.minusSeconds(3_601)));
+        assertTrue(cutoff.toInstant().isBefore(after.minusSeconds(3_599)));
+
+        org.mockito.ArgumentCaptor<Object[]> deleteArguments =
+                org.mockito.ArgumentCaptor.forClass(Object[].class);
+        verify(jdbcTemplate).update(anyString(), deleteArguments.capture());
+        assertEquals(cutoff, deleteArguments.getValue()[0]);
     }
 
     private static LogRetentionService service(

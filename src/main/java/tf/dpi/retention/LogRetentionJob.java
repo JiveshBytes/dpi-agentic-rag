@@ -24,7 +24,7 @@ public class LogRetentionJob {
     }
 
     @Scheduled(
-            cron = "${mosip.retention.cron:0 0 2 * * ?}",
+            cron = "${mosip.retention.cron:0 */2 * * * ?}",
             zone = "${mosip.retention.timezone:UTC}")
     public void run() {
         log.info("Starting log retention job");
