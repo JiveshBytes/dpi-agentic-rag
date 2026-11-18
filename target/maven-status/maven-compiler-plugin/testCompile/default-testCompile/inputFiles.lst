@@ -1,0 +1,12 @@
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\ingestion\LogIngestionServiceTest.java
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\masking\SensitiveDataDetectorTest.java
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\chunking\LogChunkingPipelineTest.java
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\ingestion\KibanaProxyClientTest.java
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\chunking\LogChunkingServiceTest.java
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\es\EsLogFetcherTest.java
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\masking\LogMaskingServiceTest.java
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\model\LogChunkMappingTest.java
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\ingestion\ElasticsearchLogReaderTest.java
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\embedding\EmbeddingBatchJobTest.java
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\embedding\OllamaEmbeddingModelTest.java
+D:\POC\mosip-dpi-agentic-rag\src\test\java\tf\dpi\retention\LogRetentionServiceTest.java

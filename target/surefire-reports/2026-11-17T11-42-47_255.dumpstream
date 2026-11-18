@@ -1,0 +1,5 @@
+# Created at 2026-11-17T11:42:47.729
+Boot Manifest-JAR contains absolute paths in classpath 'D:\POC\mosip-dpi-agentic-rag\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+

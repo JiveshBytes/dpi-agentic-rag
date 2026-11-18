@@ -1,0 +1,135 @@
+spring:
+  application:
+    name: mosip-dpi-agentic-rag
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/postgres}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:Jivesh}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 100
+        order_inserts: true
+        order_updates: true
+
+  flyway:
+    locations: classpath:db/migration
+    enabled: true
+    baseline-on-migrate: true
+
+  data:
+    elasticsearch:
+      cluster-nodes: localhost:9200
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      embedding:
+        model: ${OLLAMA_EMBEDDING_MODEL:nomic-embed-text}
+
+mosip:
+  stage: ${MOSIP_STAGE:local}
+  elasticsearch:
+    hosts: http://localhost:9200
+    kibana-url: ${KIBANA_URL:https://kibana.nsis.nira.go.ug}
+    kibana-space: ${KIBANA_SPACE:}
+    api-key: ${KIBANA_API_KEY:}
+    username: ${KIBANA_USER:admin}
+    password: ${KIBANA_PASSWORD:YzFwXw3410654S0}
+    index: ${KIBANA_INDEX:prod.master.machine_master}
+    time-field: ${KIBANA_TIME_FIELD:request_dtimes}
+    query: ${KIBANA_QUERY:}
+    page-size: ${KIBANA_PAGE_SIZE:500}
+    connection-timeout: 30000
+    socket-timeout: 30000
+
+  ollama:
+    host: http://localhost:11434
+    chat-model: llama3
+    embedding-model: ${OLLAMA_EMBEDDING_MODEL:nomic-embed-text}
+    request-timeout-seconds: ${OLLAMA_REQUEST_TIMEOUT_SECONDS:300}
+    max-retries: ${OLLAMA_MAX_RETRIES:2}
+
+  embedding:
+    dimensions: 768
+    batch-size: ${EMBEDDING_BATCH_SIZE:1}
+
+  chunking:
+    max-chunk-size: 512
+    overlap-tokens: 64
+    time-window-minutes: 15
+
+  retention:
+    enabled: true
+    cron: "0 0 2 * * ?"
+    timezone: UTC
+    retention:
+      days: 90
+      hours: 0
+    batch-size: 500
+    max-batches-per-run: 10
+    delete-delay-ms: 100
+    dry-run: false
+    delete-only-completed-records: false
+
+  ingestion:
+    checkpoint-interval-seconds: 60
+    batch-size: 500
+    pipeline-max-in-flight: ${INGESTION_PIPELINE_MAX_IN_FLIGHT:3}
+    log-file-path: src/main/resources/log.txt
+    file-masking-job:
+      enabled: false
+
+  masking:
+    parallelism: ${MASKING_PARALLELISM:0}
+    rules:
+      - name: ip-address-v4
+        pattern: "\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b"
+        replacement: "[MASKED_IP]"
+        enabled: true
+      - name: ip-address-v6
+        pattern: "\\b(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\\b"
+        replacement: "[MASKED_IP]"
+        enabled: true
+      - name: email
+        pattern: "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        replacement: "[MASKED_EMAIL]"
+        enabled: true
+      - name: phone
+        pattern: "\\b\\d{3}[-.\\s]?\\d{3}[-.\\s]?\\d{4}\\b"
+        replacement: "[MASKED_PHONE]"
+        enabled: true    
+      - name: ssn
+        pattern: "\\b\\d{3}-\\d{2}-\\d{4}\\b"
+        replacement: "[MASKED_SSN]"
+        enabled: true
+      - name: bearer-token
+        pattern: "(?i)Bearer\\s+[A-Za-z0-9._-]+"
+        replacement: "Bearer [MASKED_TOKEN]"
+        enabled: true
+      - name: uuid
+        pattern: "\\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\b"
+        replacement: "[MASKED_UUID]"
+        enabled: true
+      - name: url-query-token
+        pattern: "(?i)([?&](?:token|api[_-]?key|access[_-]?token|secret|password|pwd)=)[^&\\s]+"
+        replacement: "$1[MASKED]"
+        enabled: true
+
+logging:
+  level:
+    root: INFO
+    tf.dpi.mosip: DEBUG
+    org.springframework.data.elasticsearch: WARN
+    org.hibernate.SQL: WARN

@@ -1,0 +1,12 @@
+tf\dpi\chunking\LogChunkingPipelineTest.class
+tf\dpi\retention\LogRetentionServiceTest.class
+tf\dpi\es\EsLogFetcherTest.class
+tf\dpi\masking\LogMaskingServiceTest.class
+tf\dpi\embedding\EmbeddingBatchJobTest.class
+tf\dpi\ingestion\ElasticsearchLogReaderTest.class
+tf\dpi\chunking\LogChunkingServiceTest.class
+tf\dpi\ingestion\LogIngestionServiceTest.class
+tf\dpi\masking\SensitiveDataDetectorTest.class
+tf\dpi\ingestion\KibanaProxyClientTest.class
+tf\dpi\model\LogChunkMappingTest.class
+tf\dpi\embedding\OllamaEmbeddingModelTest.class

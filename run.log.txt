@@ -1,0 +1,8 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< tf.dpi.mosip:mosip-dpi-agentic-rag >-----------------
+[INFO] Building MOSIP DPI Agentic RAG 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot-maven-plugin:3.2.5:run (default-cli) > test-compile @ mosip-dpi-agentic-rag >>>

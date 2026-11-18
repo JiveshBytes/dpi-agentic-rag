@@ -1,0 +1,6 @@
+META-INF\spring-configuration-metadata.json
+tf\dpi\ingestion\KibanaProxyClient$KibanaHttpException.class
+tf\dpi\ingestion\KibanaProxyClient.class
+tf\dpi\ingestion\ElasticsearchLogReader$1.class
+tf\dpi\embedding\OllamaEmbeddingModel.class
+tf\dpi\ingestion\LogIngestionService$BatchKey.class

@@ -1,0 +1,175 @@
+{
+  "groups": [
+    {
+      "name": "mosip.elasticsearch",
+      "type": "tf.dpi.config.ElasticsearchConfig",
+      "sourceType": "tf.dpi.config.ElasticsearchConfig"
+    },
+    {
+      "name": "mosip.masking",
+      "type": "tf.dpi.masking.MaskingConfig",
+      "sourceType": "tf.dpi.masking.MaskingConfig"
+    },
+    {
+      "name": "mosip.ollama",
+      "type": "tf.dpi.config.OllamaConfig",
+      "sourceType": "tf.dpi.config.OllamaConfig"
+    },
+    {
+      "name": "spring.ai.ollama",
+      "type": "tf.dpi.config.SpringAIConfig",
+      "sourceType": "tf.dpi.config.SpringAIConfig"
+    },
+    {
+      "name": "spring.datasource",
+      "type": "tf.dpi.config.PostgreSQLConfig",
+      "sourceType": "tf.dpi.config.PostgreSQLConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "mosip.elasticsearch.connection-timeout",
+      "type": "java.lang.Integer",
+      "sourceType": "tf.dpi.config.ElasticsearchConfig",
+      "defaultValue": 30000
+    },
+    {
+      "name": "mosip.elasticsearch.hosts",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.ElasticsearchConfig",
+      "defaultValue": "http:\/\/localhost:9200"
+    },
+    {
+      "name": "mosip.elasticsearch.index",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.ElasticsearchConfig",
+      "defaultValue": "niraqa1.ida.auth_transaction"
+    },
+    {
+      "name": "mosip.elasticsearch.password",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.ElasticsearchConfig",
+      "defaultValue": ""
+    },
+    {
+      "name": "mosip.elasticsearch.socket-timeout",
+      "type": "java.lang.Integer",
+      "sourceType": "tf.dpi.config.ElasticsearchConfig",
+      "defaultValue": 30000
+    },
+    {
+      "name": "mosip.elasticsearch.username",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.ElasticsearchConfig",
+      "defaultValue": ""
+    },
+    {
+      "name": "mosip.masking.rules",
+      "type": "java.util.List<tf.dpi.masking.MaskingRule>",
+      "sourceType": "tf.dpi.masking.MaskingConfig"
+    },
+    {
+      "name": "mosip.ollama.chat-model",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.OllamaConfig",
+      "defaultValue": "llama3"
+    },
+    {
+      "name": "mosip.ollama.embedding-model",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.OllamaConfig",
+      "defaultValue": "nomic-embed-text"
+    },
+    {
+      "name": "mosip.ollama.host",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.OllamaConfig",
+      "defaultValue": "http:\/\/localhost:11434"
+    },
+    {
+      "name": "mosip.ollama.max-retries",
+      "type": "java.lang.Integer",
+      "sourceType": "tf.dpi.config.OllamaConfig",
+      "defaultValue": 3
+    },
+    {
+      "name": "mosip.ollama.request-timeout-seconds",
+      "type": "java.lang.Integer",
+      "sourceType": "tf.dpi.config.OllamaConfig",
+      "defaultValue": 60
+    },
+    {
+      "name": "spring.ai.ollama.base-url",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.SpringAIConfig",
+      "defaultValue": "http:\/\/localhost:11434"
+    },
+    {
+      "name": "spring.ai.ollama.embedding-model",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.SpringAIConfig",
+      "defaultValue": "nomic-embed-text"
+    },
+    {
+      "name": "spring.ai.ollama.max-tokens",
+      "type": "java.lang.Integer",
+      "sourceType": "tf.dpi.config.SpringAIConfig",
+      "defaultValue": 2048
+    },
+    {
+      "name": "spring.ai.ollama.temperature",
+      "type": "java.lang.Double",
+      "sourceType": "tf.dpi.config.SpringAIConfig",
+      "defaultValue": 0
+    },
+    {
+      "name": "spring.ai.ollama.timeout-seconds",
+      "type": "java.lang.Integer",
+      "sourceType": "tf.dpi.config.SpringAIConfig",
+      "defaultValue": 60
+    },
+    {
+      "name": "spring.datasource.connection-timeout",
+      "type": "java.lang.Integer",
+      "sourceType": "tf.dpi.config.PostgreSQLConfig",
+      "defaultValue": 30000
+    },
+    {
+      "name": "spring.datasource.driver-class-name",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.PostgreSQLConfig",
+      "defaultValue": "org.postgresql.Driver"
+    },
+    {
+      "name": "spring.datasource.maximum-pool-size",
+      "type": "java.lang.Integer",
+      "sourceType": "tf.dpi.config.PostgreSQLConfig",
+      "defaultValue": 10
+    },
+    {
+      "name": "spring.datasource.minimum-idle",
+      "type": "java.lang.Integer",
+      "sourceType": "tf.dpi.config.PostgreSQLConfig",
+      "defaultValue": 2
+    },
+    {
+      "name": "spring.datasource.password",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.PostgreSQLConfig",
+      "defaultValue": "mosip"
+    },
+    {
+      "name": "spring.datasource.url",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.PostgreSQLConfig",
+      "defaultValue": "jdbc:postgresql:\/\/localhost:5432\/mosip_dpi"
+    },
+    {
+      "name": "spring.datasource.username",
+      "type": "java.lang.String",
+      "sourceType": "tf.dpi.config.PostgreSQLConfig",
+      "defaultValue": "mosip"
+    }
+  ],
+  "hints": []
+}
